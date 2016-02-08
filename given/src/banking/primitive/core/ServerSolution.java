@@ -7,13 +7,24 @@ import java.util.HashMap;
 import java.io.*;
 
 import banking.primitive.core.Account.State;
+/**
+Class:	ServerSolution
 
+Description: A class for managing Accounts
+*/
 class ServerSolution implements AccountServer {
 
 	static String fileName = "accounts.ser";
 
 	Map<String,Account> accountMap = null;
 
+	/**
+	  Method: ServerSolution
+	  Inputs: None
+	  Returns: None
+
+	  Description: Constructor
+	*/
 	public ServerSolution() {
 		accountMap = new HashMap<String,Account>();
 		File file = new File(fileName);
@@ -45,6 +56,17 @@ class ServerSolution implements AccountServer {
 		}
 	}
 	
+	/**
+	  Method: newAccountFactory
+	  Inputs: Type of account, Name of account, Starting balance for account
+	  Returns: True if account is created; otherwise false
+
+	  Description: Uses inputs from dialog box to create a new account
+	  @param type Type of account Checking or Savings
+	  @param name Name of account
+	  @param balance Starting balance for account
+	  @return whether the account was created or not 
+	*/
 	private boolean newAccountFactory(String type, String name, float balance)
 		throws IllegalArgumentException {
 		
@@ -67,7 +89,19 @@ class ServerSolution implements AccountServer {
 		}
 		return true;
 	}
+	
+	/**
+	  Method: newAccount
+	  Inputs: Type of account, Name of account, Starting balance for account
+	  Returns: True if account is created; otherwise false
 
+	  Description: Uses inputs from dialog box to create a new account
+	  @param type Type of account Checking or Savings
+	  @param name Name of account
+	  @param balance Starting balance for account
+	  @throws IllegalArgumentException if a negative balance is given
+	  @return whether the account was created or not 
+	*/
 	public boolean newAccount(String type, String name, float balance) 
 		throws IllegalArgumentException {
 		
@@ -76,6 +110,15 @@ class ServerSolution implements AccountServer {
 		return newAccountFactory(type, name, balance);
 	}
 	
+	/**
+	  Method: closeAccount
+	  Inputs: Name of account
+	  Returns: True if account is closed; otherwise false
+
+	  Description: Sets the state of the account named to CLOSED
+	  @param name Name of account
+	  @return whether the account was closed or not 
+	*/
 	public boolean closeAccount(String name) {
 		Account acc = accountMap.get(name);
 		if (acc == null) {
@@ -85,14 +128,40 @@ class ServerSolution implements AccountServer {
 		return true;
 	}
 
+
+	/**
+	  Method: getAccount
+	  Inputs: Name of account
+	  Returns: the account with the provided name
+
+	  Description: Retrieves the account matching the provided name
+	  @param name Name of account
+	  @return the desired account 
+	*/
 	public Account getAccount(String name) {
 		return accountMap.get(name);
 	}
 
+	/**
+	  Method: getAllAccounts
+	  Inputs: None
+	  Returns: an array of all accounts
+
+	  Description: Retrieves all accounts
+	  @return an ArrayList of all accounts
+	*/
 	public List<Account> getAllAccounts() {
 		return new ArrayList<Account>(accountMap.values());
 	}
 
+	/**
+	  Method: getActiveAccounts
+	  Inputs: None
+	  Returns: an array of all accounts not in a CLOSED state
+
+	  Description: Retrieves all non-closed accounts
+	  @return an ArrayList of all active accounts
+	*/
 	public List<Account> getActiveAccounts() {
 		List<Account> result = new ArrayList<Account>();
 
@@ -104,6 +173,13 @@ class ServerSolution implements AccountServer {
 		return result;
 	}
 	
+	/**
+	  Method: saveAccounts
+	  Inputs: None
+	  Returns: None
+
+	  Description: Saves accounts as a file named "accounts.ser"
+	*/
 	public void saveAccounts() throws IOException {
 		ObjectOutputStream out = null; 
 		try {
@@ -113,14 +189,17 @@ class ServerSolution implements AccountServer {
 			for (int i=0; i < accountMap.size(); i++) {
 				out.writeObject(accountMap.get(i));
 			}
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new IOException("Could not write file:" + fileName);
-		} finally {
+		} 
+		finally {
 			if (out != null) {
 				try {
 					out.close();
-				} catch (Throwable t) {
+				} 
+				catch (Throwable t) {
 					t.printStackTrace();
 				}
 			}

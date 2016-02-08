@@ -11,6 +11,11 @@ import java.awt.Container;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+Class: MianFrame
+
+Description: Creates the GUI for this project
+*/
 @SuppressWarnings("serial")
 class MainFrame extends JFrame {
 	AccountServer	myServer;
@@ -27,6 +32,14 @@ class MainFrame extends JFrame {
 	JButton			displayAccountsButton;
 	JButton			displayODAccountsButton;
 
+	/**
+	  Method: MainFrame
+	  Inputs: The file containing the required properties
+	  Returns: None
+
+	  Description: Constructor
+	  @param propertyFile The file containing the required properties
+	*/
 	public MainFrame(String propertyFile) throws IOException {
 
 		//** initialize myServer
@@ -45,8 +58,14 @@ class MainFrame extends JFrame {
 		}
 		constructForm();
 	}
-
 	
+	/**
+	  Method: constructForm
+	  Inputs: None
+	  Returns: None
+
+	  Description: Sets all the required fields, labels, and properties for the main form.
+	*/
 	private void constructForm() {
 		//*** Make these read from properties
 		typeLabel		= new JLabel(props.getProperty("TypeLabel"));
@@ -107,7 +126,23 @@ class MainFrame extends JFrame {
 		setSize(400, 250);
 	}
 
+	
+	/**
+	  Class: DisplayHandler
+	  
+	  Description: Sets all the required fields, labels, and properties for the dialog box that appears when
+	  the displayAccountsButton is pressed.
+	*/
 	class DisplayHandler implements ActionListener {
+		
+		/**
+		  Method: actionPerformed
+		  Inputs: an event
+		  Returns: None
+
+		  Description: Displays the appropriate dialog box if the displayAccountsButton is pressed
+		  @param e the event performed on the main form.
+		*/
 		public void actionPerformed(ActionEvent e) {
 			List<Account> accounts = null;
 			if (e.getSource() == displayAccountsButton) {
@@ -126,8 +161,22 @@ class MainFrame extends JFrame {
 		}
 	}
 
-	// Complete a handler for new account button
+	/**
+	  Class: NewAccountHandler
+	  
+	  Description: Sets all the required fields, labels, and properties for the dialog box that appears when
+	  the newAccount button is pressed.
+	*/
 	class NewAccountHandler implements ActionListener {
+		
+		/**
+		  Method: actionPerformed
+		  Inputs: an event
+		  Returns: None
+
+		  Description: Displays the appropriate dialog box if the newAccount button is pressed
+		  @param e the event performed on the main form.
+		*/
 		public void actionPerformed(ActionEvent e) {
 			String type = typeOptions.getSelectedItem().toString();
 			String name = nameField.getText();
@@ -141,8 +190,22 @@ class MainFrame extends JFrame {
 		}
 	}
 	
-	// Complete a handler for new account button
+	/**
+	  Class: SaveAccountsHandler
+	  
+	  Description: Sets all the required fields, labels, and properties for the dialog box that appears when
+	  the saveAccounts button is pressed.
+	*/
 	class SaveAccountsHandler implements ActionListener {
+		
+		/**
+		  Method: actionPerformed
+		  Inputs: an event
+		  Returns: None
+
+		  Description: Displays the appropriate dialog box if the saveAccounts button is pressed
+		  @param e the event performed on the main form.
+		*/
 		public void actionPerformed(ActionEvent e) {
 			try {
 				myServer.saveAccounts();
@@ -153,8 +216,22 @@ class MainFrame extends JFrame {
 		}
 	}
 
-	// Complete a handler for deposit button
+	/**
+	  Class: DepositHandler
+	  
+	  Description: Sets all the required fields, labels, and properties for the dialog box that appears when
+	  the deposit button is pressed.
+	*/
 	class DepositHandler implements ActionListener {
+		
+		/**
+		  Method: actionPerformed
+		  Inputs: an event
+		  Returns: None
+
+		  Description: Displays the appropriate dialog box if the deposit button is pressed
+		  @param e the event performed on the main form.
+		*/
 		public void actionPerformed(ActionEvent e) {
 			String name = nameField.getText();
 			String balance = balanceField.getText();
@@ -166,8 +243,23 @@ class MainFrame extends JFrame {
 			}		
 		}
 	}
-	// Complete a handler for deposit button
+	
+	/**
+	  Class: WithdrawHandler
+	  
+	  Description: Sets all the required fields, labels, and properties for the dialog box that appears when
+	  the withdraw button is pressed.
+	*/
 	class WithdrawHandler implements ActionListener {
+		
+		/**
+		  Method: actionPerformed
+		  Inputs: an event
+		  Returns: None
+
+		  Description: Displays the appropriate dialog box if the withdraw button is pressed
+		  @param e the event performed on the main form.
+		*/
 		public void actionPerformed(ActionEvent e) {
 			String name = nameField.getText();
 			String balance = balanceField.getText();
@@ -180,10 +272,21 @@ class MainFrame extends JFrame {
 		}
 	}
 	
-	//** Complete a handler for the Frame that terminates 
-	//** (System.exit(1)) on windowClosing event
-
+	//** Complete 
+	/**
+	  Class: FrameHandler
+	  
+	  Description: A handler for the Frame that terminates (System.exit(1)) on windowClosing event.
+	*/
 	static class FrameHandler extends WindowAdapter {
+		/**
+		  Method: windowClosing
+		  Inputs: an event
+		  Returns: None
+
+		  Description: Exits the application if the window is closed
+		  @param e the event performed on the main form.
+		*/
 		public void windowClosing(WindowEvent e) {
 
 			System.exit(0);
